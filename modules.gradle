@@ -1,0 +1,5 @@
+
+
+module("app", "", ":app").include()
+module("interceptor", "chao.android.tools:interceptor:0.0.1.dev2", ":interceptor").include()
+remote("testsuit", "chao.android.tools:testsuit:0.0.1.dev1")

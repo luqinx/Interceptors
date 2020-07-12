@@ -33,7 +33,7 @@ public class InterceptorBuilder<T> {
     public InterceptorBuilder(T t, Class<T> tInterface) {
         mSource = t;
         if (t != null) {
-            mSourceInterfaces = t.getClass().getInterfaces();
+            mSourceInterfaces = allInterfaces(t.getClass());
         } else if (tInterface != null) {
             mSourceInterfaces = new Class<?>[] {tInterface};
         } else {
@@ -58,12 +58,12 @@ public class InterceptorBuilder<T> {
         return this;
     }
 
-    public InterceptorBuilder<T> before(OnBeforeListener beforeListener) {
+    public InterceptorBuilder<T> before(OnBeforeListener<T> beforeListener) {
         mBeforeListener = beforeListener;
         return this;
     }
 
-    public InterceptorBuilder<T> after(OnAfterListener afterListener) {
+    public InterceptorBuilder<T> after(OnAfterListener<T> afterListener) {
         mAfterListener = afterListener;
         return this;
     }
@@ -79,5 +79,22 @@ public class InterceptorBuilder<T> {
 
     public void action(Action<T> action) {
         action.onAction(newInstance());
+    }
+
+    private static Class<?>[] allInterfaces(Class<?> clazz) {
+        if (clazz == null || clazz == Object.class) {
+            return new Class[0];
+        }
+        Class<?>[] ifs = clazz.getInterfaces();
+        Class<?> superClazz = clazz.getSuperclass();
+        if (superClazz != null && superClazz != Object.class) {
+            Class<?>[] superIfs = allInterfaces(superClazz);
+
+            Class<?>[] newIfs = new Class[ifs.length + superIfs.length];
+            System.arraycopy(newIfs, 0, ifs, 0, ifs.length);
+            System.arraycopy(newIfs, ifs.length, superIfs, 0, superIfs.length);
+            ifs = newIfs;
+        }
+        return ifs;
     }
 }

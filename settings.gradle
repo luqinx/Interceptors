@@ -1,2 +1,8 @@
+import chao.android.gradle.plugin.api.SettingsInject
 
-include ':app', ':interceptor'
+SettingsInject.inject(getSettings(), getGradle())
+
+
+include ':app'
+include ':interceptor'
+include ':buildSrc'

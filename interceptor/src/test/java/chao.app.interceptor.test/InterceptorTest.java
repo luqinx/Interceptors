@@ -1,5 +1,15 @@
 package chao.app.interceptor.test;
 
+import com.android.tools.testsuit.Checker;
+import com.android.tools.testsuit.CheckerManager;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.Serializable;
+import java.lang.reflect.Method;
+
 import chao.android.tools.interceptor.Action;
 import chao.android.tools.interceptor.Interceptor;
 import chao.android.tools.interceptor.OnAfterListener;
@@ -7,13 +17,7 @@ import chao.android.tools.interceptor.OnBeforeListener;
 import chao.android.tools.interceptor.OnInvoke;
 import chao.app.interceptor.test.merterial.OnTempListener;
 import chao.app.interceptor.test.merterial.OnTestListener;
-import com.android.tools.testsuit.Checker;
-import com.android.tools.testsuit.CheckerManager;
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import chao.app.interceptor.test.merterial.TempSubClass;
 
 /**
  * @author qinchao
@@ -128,15 +132,15 @@ public class InterceptorTest {
             .checkBuilder("xxx")
             .withPriority()
             .build();
-        OnTestListener t = Interceptor.of(testListener).before(new OnBeforeListener() {
+        OnTestListener t = Interceptor.of(testListener).before(new OnBeforeListener<OnTestListener>() {
             @Override
-            public Object onBeforeInterceptor(Object proxy, Method method, Object[] args) {
+            public Object onBeforeInterceptor(OnTestListener proxy, Method method, Object[] args) {
                 checker.shouldCall(1);
                 return null;
             }
-        }).after(new OnAfterListener() {
+        }).after(new OnAfterListener<OnTestListener>() {
             @Override
-            public Object onAfterInterceptor(Object proxy, Method method, Object[] args, Object result) {
+            public Object onAfterInterceptor(OnTestListener proxy, Method method, Object[] args, Object result) {
                 checker.shouldCall(3);
                 return result;
             }
@@ -146,15 +150,15 @@ public class InterceptorTest {
 
 
         final Checker checker2 = checker.reset();
-        t = Interceptor.of(testListener).before(new OnBeforeListener() {
+        t = Interceptor.of(testListener).before(new OnBeforeListener<OnTestListener>() {
             @Override
-            public Object onBeforeInterceptor(Object proxy, Method method, Object[] args) {
+            public Object onBeforeInterceptor(OnTestListener proxy, Method method, Object[] args) {
                 checker2.shouldCall(1);
                 return null;
             }
-        }).after(new OnAfterListener() {
+        }).after(new OnAfterListener<OnTestListener>() {
             @Override
-            public Object onAfterInterceptor(Object proxy, Method method, Object[] args, Object result) {
+            public Object onAfterInterceptor(OnTestListener proxy, Method method, Object[] args, Object result) {
                 checker2.shouldCall(2);
                 return result;
             }
@@ -217,6 +221,19 @@ public class InterceptorTest {
         }).newInstance().onTest();
 
         checker.check();
+    }
+
+
+    @Test
+    public void testAllInterceptor() {
+        TempSubClass subClass = new TempSubClass();
+        OnTempListener tempListener = Interceptor.of(subClass, OnTempListener.class).invoke(new OnInvoke<OnTempListener>() {
+            @Override
+            public Object onInvoke(OnTempListener source, Method method, Object[] args) {
+                return null;
+            }
+        }).newInstance();
+        Assert.assertNotNull(tempListener);
     }
 
     private void print(String message) {
