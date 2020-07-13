@@ -1,5 +1,9 @@
 package chao.android.tools.interceptor;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author qinchao
  * @since 2019/4/14
@@ -85,16 +89,14 @@ public class InterceptorBuilder<T> {
         if (clazz == null || clazz == Object.class) {
             return new Class[0];
         }
-        Class<?>[] ifs = clazz.getInterfaces();
         Class<?> superClazz = clazz.getSuperclass();
-        if (superClazz != null && superClazz != Object.class) {
-            Class<?>[] superIfs = allInterfaces(superClazz);
 
-            Class<?>[] newIfs = new Class[ifs.length + superIfs.length];
-            System.arraycopy(newIfs, 0, ifs, 0, ifs.length);
-            System.arraycopy(newIfs, ifs.length, superIfs, 0, superIfs.length);
-            ifs = newIfs;
+        Set<Class<?>> set = new HashSet<>(Arrays.asList(clazz.getInterfaces()));
+        if (superClazz != null && superClazz != Object.class) {
+            set.addAll(Arrays.asList(allInterfaces(superClazz)));
         }
+        Class<?>[] ifs = new Class<?>[set.size()];
+        set.toArray(ifs);
         return ifs;
     }
 }
