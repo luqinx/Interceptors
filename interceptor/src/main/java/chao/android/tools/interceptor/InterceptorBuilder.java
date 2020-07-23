@@ -95,6 +95,7 @@ public class InterceptorBuilder<T> {
         if (superClazz != null && superClazz != Object.class) {
             set.addAll(Arrays.asList(allInterfaces(superClazz)));
         }
+        set.remove(IInterceptor.class);
         Class<?>[] ifs = new Class<?>[set.size()];
         set.toArray(ifs);
         return ifs;
