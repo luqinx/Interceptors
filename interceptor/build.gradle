@@ -28,6 +28,7 @@ abkit {
     maven {
         artifactId = "interceptor"
         groupId="chao.android.tools"
-        versionName="0.0.2.dev2"
+        versionName="0.0.3"
+        publish2Local true
     }
 }
