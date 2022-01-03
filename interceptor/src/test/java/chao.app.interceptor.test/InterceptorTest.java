@@ -10,11 +10,11 @@ import org.junit.Test;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 
-import chao.android.tools.interceptor.Action;
-import chao.android.tools.interceptor.Interceptor;
-import chao.android.tools.interceptor.OnAfterListener;
-import chao.android.tools.interceptor.OnBeforeListener;
-import chao.android.tools.interceptor.OnInvoke;
+import com.luqinx.interceptor.Action;
+import com.luqinx.interceptor.Interceptor;
+import com.luqinx.interceptor.OnAfterListener;
+import com.luqinx.interceptor.OnBeforeListener;
+import com.luqinx.interceptor.OnInvoke;
 import chao.app.interceptor.test.merterial.OnTempListener;
 import chao.app.interceptor.test.merterial.OnTestListener;
 import chao.app.interceptor.test.merterial.TempSubClass;

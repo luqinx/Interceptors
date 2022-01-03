@@ -27,8 +27,8 @@ targetCompatibility = "7"
 abkit {
     maven {
         artifactId = "interceptor"
-        groupId="chao.android.tools"
-        versionName="0.0.3"
+        groupId="com.luqinx.interceptor"
+        versionName="0.0.1"
         publish2Local true
     }
 }

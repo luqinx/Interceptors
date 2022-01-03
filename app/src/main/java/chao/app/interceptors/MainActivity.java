@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 
-import chao.android.tools.interceptor.Interceptor;
+import com.luqinx.interceptor.Interceptor;
 
 /**
  * @author luqin  qinchao@mochongsoft.com
