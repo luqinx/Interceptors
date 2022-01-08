@@ -5,15 +5,15 @@ buildscript {
     
     repositories {
         mavenLocal()
+        mavenCentral()
         google()
         jcenter()
-        maven { url 'https://jitpack.io' }
+//        maven { url 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/' }
 
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.2'
-        classpath 'com.github.luqinx:abkit:1.1.0'
-//        classpath "chao.android.gradle:abkit:0.0.2.dev1"
+        classpath 'io.github.luqinx:abkit:0.0.2-LOCAL'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -23,9 +23,9 @@ buildscript {
 allprojects {
     repositories {
 
+        mavenCentral()
         google()
         jcenter()
-        maven { url 'https://jitpack.io' }
 
     }
 }
@@ -33,5 +33,3 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-

@@ -2,6 +2,7 @@ apply plugin: 'java'
 
 apply plugin: 'jacoco'
 
+apply from: '../maven.gradle'
 
 
 jacocoTestReport {
@@ -23,12 +24,3 @@ dependencies {
 
 sourceCompatibility = "7"
 targetCompatibility = "7"
-
-abkit {
-    maven {
-        artifactId = "interceptor"
-        groupId="com.luqinx.interceptor"
-        versionName="0.0.1"
-        publish2Local true
-    }
-}
